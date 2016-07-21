@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html ng-app="redditClone">
+  <head>
+    <meta charset="utf-8">
+    <title></title>
+      <link rel="stylesheet" type="text/css" href="style.css">
+      <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.6/css/materialize.min.css">
+      <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+  </head>
+  <body  ng-controller="indexController">
+    <section>
+      <ul id="dropdown1" class="dropdown-content">
+        <li><a href="#!">Votes</a></li>
+        <li><a href="#!">Date</a></li>
+        <li class="divider"></li>
+        <li><a href="#!">Title</a></li>
+      </ul>
+      <nav>
+        <div class="nav-wrapper blue">
+          <a href="#!" class="brand-logo">Redit Clone</a>
+          <ul class="right hide-on-med-and-down">
+            <li><a ng-click="postForm = true">+ Submit Post</a></li>
+              <li><a><input type="search" placeholder="search"></a></li>
+            <!-- Dropdown Trigger -->
+            <li><a class="dropdown-button" href="#!" data-activates="dropdown1">Sort by<i class="material-icons right">arrow_drop_down</i></a></li>
+          </ul>
+        </div>
+      </nav>
+      </section>
+
+      <div class="form">
+        <form class="postForm" ng-submit="formSubmit()" ng-show="postForm">
+          <fieldset>
+              <legend>Create New Post</legend>
+                <div class="row">
+                  <div class="">
+                    <label for="title">Title</label>
+                    <input type="text"
+                            placeholder="Post Title"
+                            name="title"
+                            ng-model="title"
+                            ng-maxlength=100
+                            required/>
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="">
+                    <label for="author">Author</label>
+                    <input type="text"
+                           placeholder="Author"
+                           ng-model="author"
+                           ng-maxlength=20;
+                           name="author"
+                           required />
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="">
+                    <label for="imageUrl">Image URL</label>
+                    <input type="text"
+                           placeholder="URL for post image"
+                           ng-model="imageUrl"
+                           name="imageUrl"
+                           required />
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="">
+                    <label for="postDescription">Description</label>
+                    <input type="text"
+                           placeholder="Post Description"
+                           ng-model="postDescription"
+                           name="postDescription"
+                           required />
+                  </div>
+                </div>
+          </fieldset>
+          <button type="submit" class="postBtn">Submit Post</button>
+        </form>
+        <article clss="posts">
+
+        </article>
+      </div>
+
+      <div class="content">
+        <ul ng-repeat="data in postData">
+          <li><img ng-src="{{ data.imageUrl}}" /></li>
+          <li>{{ data.title }}</li>
+          <li>{{ data.author }}</li>
+          <li>{{ data.description }}</li>
+        </ul>
+      </div>
+
+      <script type="text/javascript" src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
+     <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.6/js/materialize.min.js"></script>
+      <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.5/angular.js">
+      </script>
+      <script src='app.js'></script>
+      <script src='script.js'></script>
+
+  </body>
+</html>
