@@ -9,18 +9,18 @@
   </head>
   <body  ng-controller="indexController">
     <section>
-      <ul id="dropdown1" class="dropdown-content">
-        <li><a href="#!">Votes</a></li>
-        <li><a href="#!">Date</a></li>
+      <ul id="dropdown1" class="dropdown-content" ng-model="dropFilter">
+        <li><a ng-click="scoreFilter = 'score'">Votes</a></li>
+        <li><a ng-click="dateFilter = 'date'">Date</a></li>
         <li class="divider"></li>
-        <li><a href="#!">Title</a></li>
+        <li><a ng-click="titleFilter = 'title'">Title</a></li>
       </ul>
       <nav>
         <div class="nav-wrapper blue">
           <a href="#!" class="brand-logo">Redit Clone</a>
           <ul class="right hide-on-med-and-down">
             <li><a ng-click="postForm = true">+ Submit Post</a></li>
-              <li><a><input type="search" placeholder="search"></a></li>
+              <li><a><input type="search" placeholder="search" ng-model="searchPosts"></a></li>
             <!-- Dropdown Trigger -->
             <li><a class="dropdown-button" href="#!" data-activates="dropdown1">Sort by<i class="material-icons right">arrow_drop_down</i></a></li>
           </ul>
@@ -67,29 +67,57 @@
                 <div class="row">
                   <div class="">
                     <label for="postDescription">Description</label>
-                    <input type="text"
-                           placeholder="Post Description"
-                           ng-model="postDescription"
-                           name="postDescription"
-                           required />
+                    <textarea name="postDescription" rows="8" cols="40"  placeholder="Post Description" ng-model="postDescription" required></textarea>
                   </div>
                 </div>
           </fieldset>
           <button type="submit" class="postBtn">Submit Post</button>
         </form>
-        <article clss="posts">
-
-        </article>
       </div>
+    <section>
 
-      <div class="content">
-        <ul ng-repeat="data in postData">
-          <li><img ng-src="{{ data.imageUrl}}" /></li>
-          <li>{{ data.title }}</li>
-          <li>{{ data.author }}</li>
-          <li>{{ data.description }}</li>
-        </ul>
+  <div ng-repeat="data in postData | filter:searchPosts | orderBy:titleFilter:reverse | orderBy:scoreFilter:reverse | orderBy:dateFilter">
+     <div class="container blue">
+       <div class="row">
+         <div class="col s3">
+           <img ng-src="{{ data.imageUrl}}" />
+         </div>
+         <div class="col s9">
+           <h5>{{ data.title }}
+             <!-- <a class="waves-effect waves-light btn">button</a> -->
+             <button class="btn-floating btn-large waves-effect waves-light "type="button" ng-click="data.upScore()">+</button>
+              <button class="btn-floating btn-large waves-effect waves-light red"type="button" ng-click="data.downScore()">-</button>
+              {{ data.score }}
+           </h5>
+           <p>
+             By: {{ data.author }}
+           </p>
+           <p>
+             {{ data.description }}
+           </p>
+           <p>
+             {{data.date | date:'medium'}}
+           </p>
+           <p ng-click="showCommentToggle()">{{ data.commentCount }} comments </p>
+           <div class="comments" ng-show="showComment">
+             <ul ng-repeat="comment in data.postComments">
+               <li> {{ comment.commentAuthor }} </li>
+               <li> {{ comment.comment }} </li>
+             </ul>
+          </div>
+           <p ng-click="commentFormView = true">Add Comment</p>
+           <ng-form name="commentForm" ng-show="commentFormView">
+             <label for="commentAuthor">Author:</label>
+             <input type="text" name="commentAuthor" ng-model="commentAuthor" />
+             <label for="comment">Comment:</label>
+             <input type="text" name="comment" ng-model="data.commentBody" />
+             <button type="submit" ng-click="data.addComment(commentForm); commentFormView = false">Add Comment</button>
+           </ng-form>
       </div>
+       </div>
+      </div>
+    </div>
+</section>
 
       <script type="text/javascript" src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
      <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.6/js/materialize.min.js"></script>

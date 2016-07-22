@@ -1,3 +1,15 @@
-.formValidate {
-  outline-color: red;
+nav{
+ margin-bottom: 1vw;
+}
+
+
+.container{
+ background-color: blue;
+ word-wrap: break-word;
+ margin: 1vw;
+}
+img{
+ height: 18vw;
+ width: 18vh;
+ padding: 1vw;
 }
